@@ -17,13 +17,15 @@
 	let selected = $state(null);
 
 	function handleSelect(choiceIndex) {
-		selected = choiceIndex;
 		session.answer(choiceIndex);
+
+		selected = session.answerSheet.getAnswer(session.current);
 	}
 
 	function refresh() {
 		question = session.currentQuestion();
-		selected = null;
+
+		selected = session.answerSheet.getAnswer(session.current);
 	}
 
 	function next() {
@@ -37,4 +39,12 @@
 	}
 </script>
 
+<p class="mb-4 text-sm opacity-70">
+	Soal {session.current + 1} / {resolvedExam.questions.length}
+</p>
 <QuestionCard {question} {selected} onSelect={handleSelect} />
+<div class="mt-6">
+	<button class="btn"> Previous </button>
+
+	<button class="btn btn-primary"> Next </button>
+</div>
