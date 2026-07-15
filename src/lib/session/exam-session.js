@@ -22,34 +22,39 @@ export class ExamSession {
 	}
 
 	next() {
-		sessionPersistence.save(this);
 		if (this.current < this.questions.length - 1) {
 			this.current++;
+
+			sessionPersistence.save(this);
 		}
 	}
 
 	previous() {
-		sessionPersistence.save(this);
 		if (this.current > 0) {
 			this.current--;
+
+			sessionPersistence.save(this);
 		}
 	}
 
 	goto(index) {
-		sessionPersistence.save(this);
 		if (index >= 0 && index < this.questions.length) {
 			this.current = index;
+
+			sessionPersistence.save(this);
 		}
 	}
 
 	answer(choice) {
-		sessionPersistence.save(this);
 		this.answerSheet.answer(this.current, choice);
+
+		sessionPersistence.save(this);
 	}
 
 	flag() {
-		sessionPersistence.save(this);
 		this.answerSheet.toggleFlag(this.current);
+
+		sessionPersistence.save(this);
 	}
 
 	submit() {
