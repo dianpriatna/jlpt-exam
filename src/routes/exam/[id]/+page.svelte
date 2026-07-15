@@ -20,6 +20,21 @@
 		selected = choiceIndex;
 		session.answer(choiceIndex);
 	}
+
+	function refresh() {
+		question = session.currentQuestion();
+		selected = null;
+	}
+
+	function next() {
+		session.next();
+		refresh();
+	}
+
+	function previous() {
+		session.previous();
+		refresh();
+	}
 </script>
 
 <QuestionCard {question} {selected} onSelect={handleSelect} />
