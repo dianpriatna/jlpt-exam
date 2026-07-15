@@ -1,13 +1,25 @@
 <script>
 	import { page } from '$app/state';
+
 	import { examResolver } from '$lib/resolvers/exam';
 	import { ExamSession } from '$lib/session/exam-session';
+
 	import QuestionCard from '$lib/components/exam/QuestionCard.svelte';
 
-	const examId = $derived(Number(page.params.id));
-	const resolvedExam = $derived(examResolver.resolve(examId));
-	const session = $derived(resolvedExam ? new ExamSession(resolvedExam) : null);
-	const question = $derived(session ? session.currentQuestion() : null);
+	const examId = Number(page.params.id);
+
+	const resolvedExam = examResolver.resolve(examId);
+
+	const session = new ExamSession(resolvedExam);
+
+	let question = $state(session.currentQuestion());
+
+	let selected = $state(null);
+
+	function handleSelect(choiceIndex) {
+		selected = choiceIndex;
+		session.answer(choiceIndex);
+	}
 </script>
 
-<QuestionCard {question} />
+<QuestionCard {question} {selected} onSelect={handleSelect} />
