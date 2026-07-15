@@ -37,6 +37,11 @@
 		session.previous();
 		refresh();
 	}
+
+	function submit() {
+		console.log(session.answerSheet);
+		alert('Sprint 9.13 OK');
+	}
 </script>
 
 <p class="mb-4 text-sm opacity-70">
@@ -47,4 +52,7 @@
 	<button class="btn"> Previous </button>
 
 	<button class="btn btn-primary"> Next </button>
+</div>
+<div class="mt-6 flex justify-end">
+	<button class="btn btn-success" type="button" onclick={submit}> Submit </button>
 </div>
