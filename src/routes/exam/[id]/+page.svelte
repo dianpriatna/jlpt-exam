@@ -1,7 +1,10 @@
 <script>
 	import { page } from '$app/state';
+	import { examResolver } from '$lib/resolvers/exam';
 
-	const examId = $derived(page.params.id);
+	const examId = $derived(Number(page.params.id));
+
+	const resolvedExam = $derived(examResolver.resolve(examId));
 </script>
 
 <svelte:head>
@@ -12,4 +15,8 @@
 	Exam {examId}
 </h1>
 
-<p class="text-base-content/70">Sprint 9.1 - Exam Route Ready</p>
+{#if resolvedExam}
+	<p class="text-success">✓ Exam berhasil di-resolve</p>
+{:else}
+	<p class="text-error">✗ Exam tidak ditemukan</p>
+{/if}
