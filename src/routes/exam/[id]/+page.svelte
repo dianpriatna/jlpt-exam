@@ -39,8 +39,21 @@
 	}
 
 	function submit() {
-		console.log(session.answerSheet);
-		alert('Sprint 9.13 OK');
+		if (!confirm('Yakin ingin mengumpulkan ujian?')) {
+			return;
+		}
+
+		let score = 0;
+
+		for (const question of resolvedExam.questions) {
+			const answer = session.answerSheet.getAnswer(question.id);
+
+			if (answer === question.answer) {
+				score++;
+			}
+		}
+
+		alert(`Skor: ${score} / ${resolvedExam.questions.length}`);
 	}
 </script>
 
