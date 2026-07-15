@@ -1,7 +1,7 @@
 <script>
 	import ChoiceList from './ChoiceList.svelte';
 
-	let { question = null } = $props();
+	let { question = null, selected = null, onSelect = () => {} } = $props();
 </script>
 
 {#if question}
@@ -11,9 +11,7 @@
 
 			<p>{question.question}</p>
 
-			<ChoiceList choices={question.choices} />
+			<ChoiceList choices={question.choices} {selected} {onSelect} />
 		</div>
 	</div>
-{:else}
-	<div class="alert alert-warning">Tidak ada soal.</div>
 {/if}
