@@ -2,10 +2,15 @@
 	import { page } from '$app/state';
 
 	import { examResolver } from '$lib/resolvers/exam';
+	import { ExamSession } from '$lib/session/exam-session';
 
 	const examId = $derived(Number(page.params.id));
 
 	const resolvedExam = $derived(examResolver.resolve(examId));
+
+	const session = $derived(resolvedExam ? new ExamSession(resolvedExam) : null);
+
+	const question = $derived(session ? session.currentQuestion() : null);
 </script>
 
 <svelte:head>
@@ -16,20 +21,18 @@
 	Exam {examId}
 </h1>
 
-{#if resolvedExam}
-	<div class="alert alert-success">
-		<span>✓ Exam berhasil di-resolve.</span>
+{#if question}
+	<div class="card bg-base-100 shadow">
+		<div class="card-body">
+			<h2 class="card-title">Soal Pertama</h2>
+
+			<p>
+				{question.question}
+			</p>
+		</div>
 	</div>
-
-	<ul class="list-disc pl-6 mt-4">
-		<li>Exam : {resolvedExam.exam.title}</li>
-
-		<li>Questions : {resolvedExam.questions.length}</li>
-
-		<li>Passages : {resolvedExam.passages.length}</li>
-	</ul>
 {:else}
 	<div class="alert alert-error">
-		<span>✗ Exam tidak ditemukan.</span>
+		<span>Tidak ada soal.</span>
 	</div>
 {/if}
